@@ -1,12 +1,25 @@
 #include "WinApp.h"
 #include <cstring>
+LRESULT WinApp::SetupWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	WinApp* lpWinApp = nullptr;
+	if (msg == WM_NCCREATE)
+	{
+		LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
+		lpWinApp = static_cast<WinApp*> (lpcs->lpCreateParams);
+		SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(lpWinApp));
+	}
+	else lpWinApp = reinterpret_cast<WinApp*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+	if (lpWinApp) lpWinApp->WndProc(hwnd, msg, wParam, lParam);
+	else return DefWindowProc(hwnd, msg, wParam, lParam);
+}
 ATOM WinApp::RegisterWndClassEx()
 {
 	ZeroMemory(&m_wc, sizeof(m_wc));
 
 	m_wc.cbSize = sizeof(WNDCLASSEX);
 	m_wc.hInstance = m_hInstance;
-	m_wc.lpfnWndProc = WndProcDummy;
+	m_wc.lpfnWndProc = WinApp::SetupWndProc;
 	m_wc.lpszClassName = m_sClassName.c_str();
 
 
@@ -56,7 +69,7 @@ int WinApp::InitInstance()
 		NULL,
 		NULL,
 		m_hInstance,
-		NULL
+		this
 	);
 
 	AssertWndFuncs(reinterpret_cast<BOOL>(m_hwnd));
@@ -94,7 +107,7 @@ int WinApp::ExitInstance()
 	return 0;
 }
 
-LRESULT WinApp::WndProcDummy(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT WinApp::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{

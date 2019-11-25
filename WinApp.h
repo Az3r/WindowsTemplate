@@ -12,6 +12,8 @@ private:
 	std::wstring m_sClassName;
 
 private:
+	static LRESULT CALLBACK SetupWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	WinApp() : m_hwnd(NULL), m_hInstance(NULL), m_wc(), m_nCmdShow(NULL), m_sTitle(L"Desktop Application"), m_sClassName(L"DesktopClass") {}
 	ATOM RegisterWndClassEx();
 public:
@@ -20,7 +22,6 @@ public:
 	int InitInstance();
 	int Run();
 	int ExitInstance();
-	static LRESULT CALLBACK WndProcDummy(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	static std::wstring GetErrorMsg(DWORD nErrorCode);
 	static void Assert(BOOL condition, wchar_t* msg);
 	static void Assert(HRESULT hr, wchar_t* msg);
