@@ -10,7 +10,7 @@ LRESULT WinApp::SetupWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(lpWinApp));
 	}
 	else lpWinApp = reinterpret_cast<WinApp*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
-	if (lpWinApp) lpWinApp->WndProc(hwnd, msg, wParam, lParam);
+	if (lpWinApp) return lpWinApp->WndProc(hwnd, msg, wParam, lParam);
 	else return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 ATOM WinApp::RegisterWndClassEx()
