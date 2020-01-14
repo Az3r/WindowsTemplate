@@ -1,5 +1,5 @@
 #include "WinApp.h"
-
+#include "Exception.h"
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE prevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	WinApp theApp(hInstance, nCmdShow);

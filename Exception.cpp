@@ -1,10 +1,18 @@
 #include "Exception.h"
-
-Exception::Exception(std::string msg, int line, std::string name) noexcept : m_sBuffer(msg), m_nLine(line), m_sName(name) {}
+#include <sstream>
+Exception::Exception(std::string msg, int line, std::string name) noexcept : m_sMessage(msg), m_nLine(line), m_sName(name) 
+{
+	char message[256];
+	sprintf_s(message, "Line %i: %s", m_nLine, m_sMessage.c_str());
+	m_sBuffer = std::string(message, strlen(message));
+}
 
 Exception::Exception(DWORD errCode, int line, std::string name) noexcept : m_sName(name), m_nLine(line)
 {
-	m_sBuffer = TranslateErrorCode(errCode);
+	m_sMessage = TranslateErrorCode(errCode);
+	char message[256];
+	sprintf_s(message, "Line %i: %s", m_nLine, m_sMessage.c_str());
+	m_sBuffer = std::string(message, strlen(message));
 }
 
 inline const char* Exception::what() const noexcept
@@ -12,9 +20,14 @@ inline const char* Exception::what() const noexcept
 	return m_sBuffer.c_str();
 }
 
-inline const std::string Exception::name() const noexcept
+inline std::string Exception::name() const noexcept
 {
 	return m_sName;
+}
+
+std::string Exception::message() const noexcept
+{
+	return m_sMessage;
 }
 
 std::string Exception::TranslateErrorCode(DWORD errorCode) noexcept
