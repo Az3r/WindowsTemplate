@@ -23,7 +23,7 @@ inline const char* Exception::what() const noexcept
 	return m_sBuffer.c_str();
 }
 
-inline std::string Exception::name() const noexcept
+std::string Exception::name() const noexcept
 {
 	return m_sName;
 }
@@ -31,6 +31,11 @@ inline std::string Exception::name() const noexcept
 std::string Exception::message() const noexcept
 {
 	return m_sMessage;
+}
+
+std::string Exception::file() const noexcept
+{
+	return m_sFile;
 }
 
 std::string Exception::TranslateErrorCode(DWORD errorCode) noexcept
@@ -60,12 +65,12 @@ std::string Exception::TranslateErrorCode(DWORD errorCode) noexcept
 	return msg;
 }
 
-void Exception::throw_if_false(HRESULT hr, std::string msg, int line, std::string name)
+void Exception::throw_if_false(HRESULT hr, std::string msg, int line, const char* file, std::string name)
 {
-	if (FAILED(hr)) throw Exception(msg, line, name);
+	if (FAILED(hr)) throw Exception(msg, line, file, name);
 }
 
-void Exception::throw_if_false(BOOL hr, std::string msg, int line, std::string name)
+void Exception::throw_if_false(BOOL hr, std::string msg, int line, const char* file, std::string name)
 {
-	if (!hr) throw Exception(msg, line, name);
+	if (!hr) throw Exception(msg, line, file, name);
 }

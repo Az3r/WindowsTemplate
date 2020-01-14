@@ -2,6 +2,7 @@
 #include <exception>
 #include <string>
 #include <Windows.h>
+#include <string>
 
 class Exception : public std::exception
 {
@@ -18,11 +19,12 @@ public:
     virtual const char* what() const noexcept;
     std::string name() const noexcept;
     std::string message() const noexcept;
+    std::string file() const noexcept;
 
     // Translate error code returned from GetLastError() to string
     static std::string TranslateErrorCode(DWORD errorCode) noexcept;
-    static void throw_if_false(HRESULT hr, std::string msg, int line, std::string name = "Exception");
-    static void throw_if_false(BOOL hr, std::string msg, int line, std::string name = "Exception");
+    static void throw_if_false(HRESULT hr, std::string msg, int line, const char* file, std::string name = "Exception");
+    static void throw_if_false(BOOL hr, std::string msg, int line, const char* file, std::string name = "Exception");
 };
 
 #define try_throw(hr) if(FAILED(hr)) throw Exception(Exception::TranslateErrorCode(GetLastError()), __LINE__)
