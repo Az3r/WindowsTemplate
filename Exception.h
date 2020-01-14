@@ -9,10 +9,11 @@ protected:
     std::string m_sMessage;
     std::string m_sName;
     std::string m_sBuffer;
+    std::string m_sFile;
     int m_nLine;
 public:
-    Exception(std::string msg, int line, std::string name = "Exception") noexcept;
-    Exception(DWORD errCode, int line, std::string name = "Exception") noexcept;
+    Exception(std::string msg, int line, const char* file, std::string name = "Exception") noexcept;
+    Exception(DWORD errCode, int line, const char* file, std::string name = "Exception") noexcept;
     virtual ~Exception() noexcept {}
     virtual const char* what() const noexcept;
     std::string name() const noexcept;
@@ -25,3 +26,4 @@ public:
 };
 
 #define try_throw(hr) if(FAILED(hr)) throw Exception(Exception::TranslateErrorCode(GetLastError()), __LINE__)
+#define throw_exception(msg) throw Exception(msg, __LINE__, __FILE__)
