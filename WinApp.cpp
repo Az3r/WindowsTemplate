@@ -35,6 +35,8 @@ WinApp::WinApp(HINSTANCE hInstance, int nCmdShow) : WinApp()
 
 int WinApp::InitInstance()
 {
+	Exception::throw_if_false((BOOL)RegisterWndClassEx(), Exception::TranslateErrorCode(GetLastError()), __LINE__, "Window Registeration Failure");
+
 	m_hwnd = CreateWindowEx(
 		WS_EX_CLIENTEDGE,
 		m_sClassName.c_str(),
@@ -46,6 +48,7 @@ int WinApp::InitInstance()
 		m_hInstance,
 		this
 	);
+
 
 	Exception::throw_if_false((BOOL)m_hwnd, Exception::TranslateErrorCode(GetLastError()), __LINE__, "Window Creation Failure");
 
