@@ -44,7 +44,7 @@ std::string Exception::TranslateErrorCode(DWORD errorCode) noexcept
 	return msg;
 }
 
-inline void Exception::throw_if_false(HRESULT hr, std::string msg, int line, std::string name = "Exception")
+inline void Exception::throw_if_false(HRESULT hr, std::string msg, int line, std::string name)
 {
 	if (FAILED(hr)) throw Exception(msg, line, name);
 }
