@@ -27,5 +27,5 @@ public:
     static void throw_if_false(BOOL hr, std::string msg, int line, const char* file, std::string name = "Exception");
 };
 
-#define try_throw(hr) if(FAILED(hr)) throw Exception(Exception::TranslateErrorCode(GetLastError()), __LINE__)
+#define try_throw(hr) if(FAILED(hr)) throw Exception(Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__)
 #define throw_exception(msg) throw Exception(msg, __LINE__, __FILE__)
