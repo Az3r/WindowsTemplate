@@ -7,11 +7,11 @@
 class Exception : public std::exception
 {
 protected:
-    std::string m_sMessage;
-    std::string m_sName;
-    std::string m_sBuffer;
-    std::string m_sFile;
-    int m_nLine;
+    std::string mMessage;
+    std::string mName;
+    std::string mBuffer;
+    std::string mFile;
+    int mLine;
 public:
     Exception(std::string msg, int line, const char* file, std::string name = "Exception") noexcept;
     Exception(DWORD errCode, int line, const char* file, std::string name = "Exception") noexcept;

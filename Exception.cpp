@@ -1,41 +1,41 @@
 #include "Exception.h"
 #include <sstream>
 
-Exception::Exception(std::string msg, int line, const char* file, std::string name) noexcept : m_sMessage(msg), m_nLine(line), m_sName(name), m_sFile(file)
+Exception::Exception(std::string msg, int line, const char* file, std::string name) noexcept : mMessage(msg), mLine(line), mName(name), mFile(file)
 {
 	char message[512];
-	sprintf_s(message, "[LINE]: %i\n[FILE]: %s\n[MESSAGE]: %s", m_nLine, m_sFile.c_str(), m_sMessage.c_str());
-	m_sBuffer = std::string(message, strlen(message));
-	m_sBuffer.shrink_to_fit();
+	sprintf_s(message, "[LINE]: %i\n[FILE]: %s\n[MESSAGE]: %s", mLine, mFile.c_str(), mMessage.c_str());
+	mBuffer = std::string(message, strlen(message));
+	mBuffer.shrink_to_fit();
 }
 
-Exception::Exception(DWORD errCode, int line, const char* file, std::string name) noexcept : m_sName(name), m_nLine(line), m_sFile(file)
+Exception::Exception(DWORD errCode, int line, const char* file, std::string name) noexcept : mName(name), mLine(line), mFile(file)
 {
-	m_sMessage = TranslateErrorCode(errCode);
+	mMessage = TranslateErrorCode(errCode);
 	char message[512];
-	sprintf_s(message, "[LINE]: %i\n[FILE]: %s\n[MESSAGE]: %s", m_nLine, m_sFile.c_str(), m_sMessage.c_str());
-	m_sBuffer = std::string(message, strlen(message));
-	m_sBuffer.shrink_to_fit();
+	sprintf_s(message, "[LINE]: %i\n[FILE]: %s\n[MESSAGE]: %s", mLine, mFile.c_str(), mMessage.c_str());
+	mBuffer = std::string(message, strlen(message));
+	mBuffer.shrink_to_fit();
 }
 
 inline const char* Exception::what() const noexcept
 {
-	return m_sBuffer.c_str();
+	return mBuffer.c_str();
 }
 
 std::string Exception::name() const noexcept
 {
-	return m_sName;
+	return mName;
 }
 
 std::string Exception::message() const noexcept
 {
-	return m_sMessage;
+	return mMessage;
 }
 
 std::string Exception::file() const noexcept
 {
-	return m_sFile;
+	return mFile;
 }
 
 std::string Exception::TranslateErrorCode(DWORD errorCode) noexcept
