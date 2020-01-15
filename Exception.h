@@ -28,4 +28,5 @@ public:
 };
 
 #define try_throw(hr) if(FAILED(hr)) throw Exception(Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__)
+#define assert(condition, msg) if(!condition) throw Exception(msg, __LINE__, __FILE__, "Assertion Failed")
 #define throw_exception(msg) throw Exception(msg, __LINE__, __FILE__)
