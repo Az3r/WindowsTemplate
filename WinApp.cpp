@@ -39,6 +39,30 @@ void WinApp::Move(int width, int height, int x, int y)
 	mTop = y;
 }
 
+int WinApp::Start()
+{
+	try
+	{
+		InitInstance();
+		Run();
+		ExitInstance();
+	}
+	catch (const Exception & e)
+	{
+		MessageBoxA(NULL, e.what(), e.name().c_str(), MB_ICONEXCLAMATION);
+	}
+	catch (const std::exception & ex)
+	{
+		MessageBoxA(NULL, ex.what(), "Standard Exception", MB_ICONEXCLAMATION);
+	}
+	catch (...)
+	{
+		MessageBoxA(NULL, "Unknown Exception", "Unknown Exception", MB_ICONEXCLAMATION);
+	}
+
+	return 0;
+}
+
 void WinApp::SetTitle(std::wstring title) noexcept
 {
 	mTitle = title;
@@ -77,18 +101,14 @@ int WinApp::Run()
 
 	BOOL result;
 
-	while (result = GetMessage(&msg, mHWND, NULL, NULL))
+	while (result = GetMessage(&msg, NULL, NULL, NULL))
 	{
-		if (result < 0)
-		{
-			// window has been closed and destroyed
-			return 0;
-		}
 		TranslateMessage(&msg);
 		DispatchMessageW(&msg);
 	}
 
-	return 0;
+	if (result < 0) return -1;
+	else return msg.wParam;
 }
 
 int WinApp::ExitInstance()

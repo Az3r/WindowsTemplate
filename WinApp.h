@@ -14,8 +14,10 @@ private:
 	static LRESULT CALLBACK SetupWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	ATOM RegisterWndClassEx();
 protected:
-	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
+	virtual LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	virtual int InitInstance();
+	virtual int Run();
+	virtual int ExitInstance();
 public:
 	WinApp() : mHWND(NULL), mWC(), 
 		mTitle(L"Desktop Application"),
@@ -43,10 +45,8 @@ public:
 	inline void SetPosition(int x, int y) { Move(mWidth, mHeight, x, y); }
 	inline void SetSize(int width, int height) { Move(width, height, mLeft, mTop); }
 
+	virtual int Start();
 
-	int InitInstance();
-	int Run();
-	int ExitInstance();
 
 };
 
