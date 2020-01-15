@@ -12,9 +12,9 @@ private:
 
 private:
 	static LRESULT CALLBACK SetupWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	
 	ATOM RegisterWndClassEx();
+protected:
+	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 public:
 	WinApp() : mHWND(NULL), mWC(), 
@@ -32,6 +32,16 @@ public:
 	WinApp& operator=(const WinApp&) = delete;
 	~WinApp() noexcept {}
 
+
+	inline std::wstring GetTitle() const noexcept { return mTitle; }
+	inline int GetWidth() const noexcept { return mWidth; }
+	inline int GetHeight() const noexcept { return mHeight; }
+	RECT GetPosition() const noexcept { return { mLeft, mTop, mWidth - mLeft - 1, mHeight - mTop - 1 }; }
+	
+	void SetTitle(std::wstring title) noexcept;
+	void Move(int width, int height, int x, int y);
+	inline void SetPosition(int x, int y) { Move(mWidth, mHeight, x, y); }
+	inline void SetSize(int width, int height) { Move(width, height, mLeft, mTop); }
 
 
 	int InitInstance();

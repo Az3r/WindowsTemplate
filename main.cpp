@@ -11,7 +11,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE prevInstance, _I
 	g_nCmdShow = nCmdShow;
 
 
-	WinApp theApp;
+	WinApp theApp(600,600, 1,1);
 	int result;
 	if ((result = theApp.InitInstance()) < 0) return result;
 	theApp.Run();
