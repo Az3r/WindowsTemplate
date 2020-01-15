@@ -23,17 +23,17 @@ inline const char* Exception::what() const noexcept
 	return mBuffer.c_str();
 }
 
-std::string Exception::name() const noexcept
+const std::string& Exception::name() const noexcept
 {
 	return mName;
 }
 
-std::string Exception::message() const noexcept
+const std::string& Exception::message() const noexcept
 {
 	return mMessage;
 }
 
-std::string Exception::file() const noexcept
+const std::string& Exception::file() const noexcept
 {
 	return mFile;
 }

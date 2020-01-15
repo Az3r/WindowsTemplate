@@ -17,9 +17,9 @@ public:
     Exception(DWORD errCode, int line, const char* file, std::string name = "Exception") noexcept;
     virtual ~Exception() noexcept {}
     virtual const char* what() const noexcept;
-    std::string name() const noexcept;
-    std::string message() const noexcept;
-    std::string file() const noexcept;
+    const std::string& name() const noexcept;
+    const std::string& message() const noexcept;
+    const std::string& file() const noexcept;
 
     // Translate error code returned from GetLastError() to string
     static std::string TranslateErrorCode(DWORD errorCode) noexcept;
