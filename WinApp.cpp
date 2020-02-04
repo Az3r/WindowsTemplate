@@ -71,7 +71,7 @@ void WinApp::SetTitle(std::wstring title) noexcept
 
 int WinApp::InitInstance()
 {
-	Exception::throw_if_false((BOOL)RegisterWndClassEx(), Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__, "Window Registeration Failure");
+	Exception::Assert((BOOL)RegisterWndClassEx(), Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__, "Window Registeration Failure");
 
 	mHWND = CreateWindowEx(
 		WS_EX_CLIENTEDGE,
@@ -86,7 +86,7 @@ int WinApp::InitInstance()
 	);
 
 
-	Exception::throw_if_false((BOOL)mHWND, Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__, "Window Creation Failure");
+	Exception::Assert((BOOL)mHWND, Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__, "Window Creation Failure");
 
 	ShowWindow(mHWND, g_nCmdShow);
 	UpdateWindow(mHWND);
@@ -114,7 +114,7 @@ int WinApp::Run()
 int WinApp::ExitInstance()
 {
 	BOOL result = UnregisterClass(sClassName.c_str(), g_hInstance);
-	Exception::throw_if_false(result, Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__, "Unregisteration Failure");
+	Exception::Assert(result, Exception::TranslateErrorCode(GetLastError()), __LINE__, __FILE__, "Unregisteration Failure");
 	return 0;
 }
 

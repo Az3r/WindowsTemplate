@@ -43,7 +43,7 @@ std::string Exception::TranslateErrorCode(DWORD errorCode) noexcept
 	// get language id
 	DWORD value;
 	int langResult = GetLocaleInfoEx(L"en-us", LOCALE_ILANGUAGE | LOCALE_RETURN_NUMBER, reinterpret_cast<LPWSTR>(&value), sizeof(DWORD) / sizeof(wchar_t));
-	LANGID langId = value;
+	LANGID langId = static_cast<LANGID>(value);
 
 	// get message corresponding its error code
 	LPSTR pBuffer = nullptr;
@@ -65,12 +65,12 @@ std::string Exception::TranslateErrorCode(DWORD errorCode) noexcept
 	return msg;
 }
 
-void Exception::throw_if_false(HRESULT hr, std::string msg, int line, const char* file, std::string name)
+void Exception::Assert(HRESULT hr, std::string msg, int line, const char* file, std::string name)
 {
 	if (FAILED(hr)) throw Exception(msg, line, file, name);
 }
 
-void Exception::throw_if_false(BOOL hr, std::string msg, int line, const char* file, std::string name)
+void Exception::Assert(BOOL hr, std::string msg, int line, const char* file, std::string name)
 {
 	if (!hr) throw Exception(msg, line, file, name);
 }
